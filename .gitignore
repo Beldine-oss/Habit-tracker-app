@@ -1,0 +1,30 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+
+# Environment files
+.env
+
+# Editor and OS files
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db
+
+# Windows user folders
+AppData/
+Contacts/
+Documents/
+Downloads/
+Music/
+Pictures/
+Videos/
+Saved Games/
+Searches/
+Favorites/
+3D Objects/
+Alx/
+My_First_Portfolio/
