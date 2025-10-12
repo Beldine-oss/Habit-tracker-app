@@ -1,14 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+
+import React from "react";
+import HeroSection from "./components/HeroSection";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Main Page */}
-        <Route path="/" element={<Dashboard />} />
-      </Routes>
-    </Router>
+    <>
+      <HeroSection />
+    </>
   );
 }
 
