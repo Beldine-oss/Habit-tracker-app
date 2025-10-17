@@ -14,15 +14,20 @@ export default function HowItWorks() {
       </p>
 
       {/* Three Buttons Row */}
-      <div className="flex flex-row gap-8">
-        <button className="bg-[#fffcf0] text-[#695125] px-6 py-4 rounded-lg shadow-md font-semibold hover:bg-[#efe6d8] transition">
-          Step 1
+      <div className="flex flex-row gap-8 flex-wrap justify-center w-full max-w-6xl">
+        <button className="bg-[#fffcf0] text-[#695125] px-6 py-8 rounded-lg shadow-md font-semibold hover:bg-[#efe6d8] transition flex-1 min-w-[250px]">
+          <span className="font-bold block mb-2">Create Your Habits</span>
+          Set up habits in categories like Health, Learning, or Mindfulness.
         </button>
-        <button className="bg-[#fffcf0] text-[#695125] px-6 py-4 rounded-lg shadow-md font-semibold hover:bg-[#efe6d8] transition">
-          Step 2
+
+        <button className="bg-[#fffcf0] text-[#695125] px-6 py-8 rounded-lg shadow-md font-semibold hover:bg-[#efe6d8] transition flex-1 min-w-[250px]">
+          <span className="font-bold block mb-2">Track Daily</span>
+          Simple one-tap completion with optional notes and reflections.
         </button>
-        <button className="bg-[#fffcf0] text-[#695125] px-6 py-4 rounded-lg shadow-md font-semibold hover:bg-[#efe6d8] transition">
-          Step 3
+
+        <button className="bg-[#fffcf0] text-[#695125] px-6 py-8 rounded-lg shadow-md font-semibold hover:bg-[#efe6d8] transition flex-1 min-w-[250px]">
+          <span className="font-bold block mb-2">Build Momentum</span>
+          Watch your streaks grow and celebrate your progress.
         </button>
       </div>
 
