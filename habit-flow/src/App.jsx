@@ -19,36 +19,36 @@ export default function App() {
 
       {/* Features Section */}
       <div className="flex justify-center w-full">
-        <div className="grid grid-cols-2 gap-6 max-w-4xl text-center">
+        <div className="grid grid-cols-2 gap-8 max-w-4xl w-full text-center">
           {/* Feature Buttons */}
-          <div className="bg-[#b79b87] p-6 rounded-2xl shadow-md hover:scale-105 transition-transform duration-200">
-            <h2 className="text-xl font-bold text-black mb-2">Set Goals</h2>
-            <p className="text-black">Create personalized habits across different categories.</p>
+          <div className="bg-gradient-to-r from-[#b79b87] to-[#c5ad90] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#c5ad90] hover:to-[#b79b87]">
+            <h2 className="text-xl font-bold text-black mb-1">Set Goals</h2>
+            <p className="text-black text-sm">Create personalized habits across different categories.</p>
           </div>
 
-          <div className="bg-[#b89e6f] p-6 rounded-2xl shadow-md hover:scale-105 transition-transform duration-200">
-            <h2 className="text-xl font-bold text-black mb-2">Track Progress</h2>
-            <p className="text-black">Simple one-tap logging to mark habits as complete.</p>
+          <div className="bg-gradient-to-r from-[#b89e6f] to-[#d1b88a] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#d1b88a] hover:to-[#b89e6f]">
+            <h2 className="text-xl font-bold text-black mb-1">Track Progress</h2>
+            <p className="text-black text-sm">Simple one-tap logging to mark habits as complete.</p>
           </div>
 
-          <div className="bg-[#b89e6f] p-6 rounded-2xl shadow-md hover:scale-105 transition-transform duration-200">
-            <h2 className="text-xl font-bold text-black mb-2">Build Streaks</h2>
-            <p className="text-black">Stay motivated with visual progress and streak counters.</p>
+          <div className="bg-gradient-to-r from-[#b89e6f] to-[#e0c997] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#e0c997] hover:to-[#b89e6f]">
+            <h2 className="text-xl font-bold text-black mb-1">Build Streaks</h2>
+            <p className="text-black text-sm">Stay motivated with visual progress and streak counters.</p>
           </div>
 
-          <div className="bg-[#efe3b8] p-6 rounded-2xl shadow-md hover:scale-105 transition-transform duration-200">
-            <h2 className="text-xl font-bold text-black mb-2">Calendar View</h2>
-            <p className="text-black">See your progress at a glance.</p>
+          <div className="bg-gradient-to-r from-[#efe3b8] to-[#d8c895] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#d8c895] hover:to-[#efe3b8]">
+            <h2 className="text-xl font-bold text-black mb-1">Calendar View</h2>
+            <p className="text-black text-sm">See your progress at a glance.</p>
           </div>
 
-          <div className="bg-[#b79b87] p-6 rounded-2xl shadow-md hover:scale-105 transition-transform duration-200">
-            <h2 className="text-xl font-bold text-black mb-2">Daily Quotes</h2>
-            <p className="text-black">Get inspired with daily quotes and motivation.</p>
+          <div className="bg-gradient-to-r from-[#b79b87] to-[#cdb59a] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#cdb59a] hover:to-[#b79b87]">
+            <h2 className="text-xl font-bold text-black mb-1">Daily Quotes</h2>
+            <p className="text-black text-sm">Get inspired with daily quotes and motivation.</p>
           </div>
 
-          <div className="bg-[#b89e6f] p-6 rounded-2xl shadow-md hover:scale-105 transition-transform duration-200">
-            <h2 className="text-xl font-bold text-black mb-2">Personalized</h2>
-            <p className="text-black">Organize habits by categories that matter to you.</p>
+          <div className="bg-gradient-to-r from-[#b89e6f] to-[#c9b180] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#c9b180] hover:to-[#b89e6f]">
+            <h2 className="text-xl font-bold text-black mb-1">Personalized</h2>
+            <p className="text-black text-sm">Organize habits by categories that matter to you.</p>
           </div>
         </div>
       </div>
