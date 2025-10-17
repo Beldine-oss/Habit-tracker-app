@@ -1,4 +1,11 @@
 export default function App() {
+  const scrollToHowItWorks = () => {
+    const section = document.getElementById("how-it-works");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#fffcf0] flex flex-col items-center justify-center px-6 py-12">
       {/* Header */}
@@ -13,29 +20,40 @@ export default function App() {
       </p>
 
       {/* Start Button */}
-      <button className="bg-[#b89e6f] text-white px-10 py-4 rounded-full text-xl font-semibold shadow-md hover:opacity-90 transition mb-16">
+      <button
+        onClick={scrollToHowItWorks}
+        className="bg-[#b89e6f] text-white px-10 py-4 rounded-full text-xl font-semibold shadow-md hover:opacity-90 transition mb-16"
+      >
         Start Building Habits
       </button>
 
-  {/* Features Section */}
-  <div className="grid grid-cols-2 gap-8 max-w-4xl w-full place-items-stretch text-center">
+      {/* Features Section */}
+      <div className="grid grid-cols-2 gap-8 max-w-5xl w-full text-center justify-items-center">
         {[
-          { title: "Set Goals", desc: "Create personalized habits across different categories.", color: "#b79b87" },
-          { title: "Track Progress", desc: "Simple one-tap logging to mark habits as complete.", color: "#b89e6f" },
-          { title: "Build Streaks", desc: "Stay motivated with visual progress and streak counters.", color: "#b89e6f" },
-          { title: "Calendar View", desc: "See your progress at a glance.", color: "#efe3b8" },
-          { title: "Daily Quotes", desc: "Get inspired with daily quotes and motivation.", color: "#b79b87" },
-          { title: "Personalized", desc: "Organize habits by categories that matter to you.", color: "#b89e6f" },
-        ].map((feature, index) => (
-          <div
-            key={index}
-            className="rounded-full shadow-md py-4 px-6 w-full max-w-xs mx-auto hover:scale-105 transition transform"
-            style={{ backgroundColor: feature.color }}
+          ["Set Goals", "Create personalized habits across different categories.", "#e6ccb2"],
+          ["Track Progress", "Simple one-tap logging to mark habits as complete.", "#d4a373"],
+          ["Build Streaks", "Stay motivated with visual progress and streak counters.", "#b79b87"],
+          ["Calendar View", "See your progress at a glance.", "#c9a37a"],
+          ["Daily Quotes", "Get inspired with daily quotes and motivation.", "#a68a64"],
+          ["Personalized", "Organize habits by categories that matter to you.", "#8b6f47"],
+        ].map(([title, desc, color], i) => (
+          <button
+            key={i}
+            className="w-full max-w-xs h-40 p-5 rounded-full shadow-md transition text-black flex flex-col items-center justify-center mx-auto hover:opacity-90"
+            style={{ backgroundColor: color }}
           >
-            <h2 className="text-lg font-bold text-black mb-1">{feature.title}</h2>
-            <p className="text-sm text-black">{feature.desc}</p>
-          </div>
+            <h2 className="text-xl font-bold mb-1">{title}</h2>
+            <p className="text-sm">{desc}</p>
+          </button>
         ))}
+      </div>
+
+      {/* How It Works Section */}
+      <div
+        id="how-it-works"
+        className="w-full bg-[#b89e6f] text-[#fffcf0] text-center py-20 mt-20 rounded-2xl"
+      >
+        <h2 className="text-5xl font-[Lovelace]">How It Works</h2>
       </div>
     </div>
   );
