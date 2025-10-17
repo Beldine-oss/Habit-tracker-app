@@ -15,19 +15,19 @@ export default function HowItWorks() {
 
       {/* Three Buttons Row */}
       <div className="flex flex-row flex-nowrap gap-6 justify-center w-full max-w-6xl mb-12">
-        <button className="bg-[#fffcf0] text-[#695125] px-6 h-[30vh] rounded-lg shadow-md font-semibold hover:bg-[#efe6d8] transition w-[30%] min-w-[200px]">
-          <span className="font-bold block mb-2 text-lg">Create Your Habits</span>
-          Set up habits in categories like Health, Learning, or Mindfulness.
+        <button className="bg-[#fffcf0] text-[#695125] h-[30vh] w-[30%] min-w-[200px] rounded-lg shadow-md hover:bg-[#efe6d8] transition flex flex-col justify-center items-center p-6">
+          <span className="font-extrabold text-4xl mb-4 text-center">Create Your Habits</span>
+          <span className="text-2xl text-center">Set up habits in categories like Health, Learning, or Mindfulness.</span>
         </button>
 
-        <button className="bg-[#fffcf0] text-[#695125] px-6 h-[30vh] rounded-lg shadow-md font-semibold hover:bg-[#efe6d8] transition w-[30%] min-w-[200px]">
-          <span className="font-bold block mb-2 text-lg">Track Daily</span>
-          Simple one-tap completion with optional notes and reflections.
+        <button className="bg-[#fffcf0] text-[#695125] h-[30vh] w-[30%] min-w-[200px] rounded-lg shadow-md hover:bg-[#efe6d8] transition flex flex-col justify-center items-center p-6">
+          <span className="font-extrabold text-4xl mb-4 text-center">Track Daily</span>
+          <span className="text-2xl text-center">Simple one-tap completion with optional notes and reflections.</span>
         </button>
 
-        <button className="bg-[#fffcf0] text-[#695125] px-6 h-[30vh] rounded-lg shadow-md font-semibold hover:bg-[#efe6d8] transition w-[30%] min-w-[200px]">
-          <span className="font-bold block mb-2 text-lg">Build Momentum</span>
-          Watch your streaks grow and celebrate your progress.
+        <button className="bg-[#fffcf0] text-[#695125] h-[30vh] w-[30%] min-w-[200px] rounded-lg shadow-md hover:bg-[#efe6d8] transition flex flex-col justify-center items-center p-6">
+          <span className="font-extrabold text-4xl mb-4 text-center">Build Momentum</span>
+          <span className="text-2xl text-center">Watch your streaks grow and celebrate your progress.</span>
         </button>
       </div>
 
