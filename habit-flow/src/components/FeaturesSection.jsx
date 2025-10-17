@@ -12,7 +12,7 @@ export default function FeaturesSection() {
     <section className="text-center p-8 flex flex-col items-center justify-center min-h-screen bg-gray-50">
       <h1 className="text-4xl font-bold text-indigo-600 mb-8">HabitFlow Features</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+      <div className="grid grid-cols-2 gap-6 justify-items-center">
         {features.map((feature, index) => (
           <button
             key={index}

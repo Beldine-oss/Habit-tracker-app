@@ -13,44 +13,29 @@ export default function App() {
       </p>
 
       {/* Start Button */}
-      <button className="bg-[#b89e6f] text-white px-8 py-3 rounded-full text-lg font-semibold shadow-md hover:opacity-90 transition mb-16">
+      <button className="bg-[#b89e6f] text-white px-10 py-4 rounded-full text-xl font-semibold shadow-md hover:opacity-90 transition mb-16">
         Start Building Habits
       </button>
 
-      {/* Features Section */}
-      <div className="flex justify-center w-full">
-        <div className="grid grid-cols-2 gap-8 max-w-4xl w-full text-center">
-          {/* Feature Buttons */}
-          <div className="bg-gradient-to-r from-[#b79b87] to-[#c5ad90] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#c5ad90] hover:to-[#b79b87]">
-            <h2 className="text-xl font-bold text-black mb-1">Set Goals</h2>
-            <p className="text-black text-sm">Create personalized habits across different categories.</p>
+  {/* Features Section */}
+  <div className="grid grid-cols-2 gap-8 max-w-3xl w-full justify-items-center text-center">
+        {[
+          { title: "Set Goals", desc: "Create personalized habits across different categories.", color: "#b79b87" },
+          { title: "Track Progress", desc: "Simple one-tap logging to mark habits as complete.", color: "#b89e6f" },
+          { title: "Build Streaks", desc: "Stay motivated with visual progress and streak counters.", color: "#b89e6f" },
+          { title: "Calendar View", desc: "See your progress at a glance.", color: "#efe3b8" },
+          { title: "Daily Quotes", desc: "Get inspired with daily quotes and motivation.", color: "#b79b87" },
+          { title: "Personalized", desc: "Organize habits by categories that matter to you.", color: "#b89e6f" },
+        ].map((feature, index) => (
+          <div
+            key={index}
+            className="rounded-full shadow-md py-3 px-6 w-full max-w-xs hover:scale-105 transition transform"
+            style={{ backgroundColor: feature.color }}
+          >
+            <h2 className="text-lg font-semibold text-black mb-1">{feature.title}</h2>
+            <p className="text-sm text-black">{feature.desc}</p>
           </div>
-
-          <div className="bg-gradient-to-r from-[#b89e6f] to-[#d1b88a] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#d1b88a] hover:to-[#b89e6f]">
-            <h2 className="text-xl font-bold text-black mb-1">Track Progress</h2>
-            <p className="text-black text-sm">Simple one-tap logging to mark habits as complete.</p>
-          </div>
-
-          <div className="bg-gradient-to-r from-[#b89e6f] to-[#e0c997] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#e0c997] hover:to-[#b89e6f]">
-            <h2 className="text-xl font-bold text-black mb-1">Build Streaks</h2>
-            <p className="text-black text-sm">Stay motivated with visual progress and streak counters.</p>
-          </div>
-
-          <div className="bg-gradient-to-r from-[#efe3b8] to-[#d8c895] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#d8c895] hover:to-[#efe3b8]">
-            <h2 className="text-xl font-bold text-black mb-1">Calendar View</h2>
-            <p className="text-black text-sm">See your progress at a glance.</p>
-          </div>
-
-          <div className="bg-gradient-to-r from-[#b79b87] to-[#cdb59a] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#cdb59a] hover:to-[#b79b87]">
-            <h2 className="text-xl font-bold text-black mb-1">Daily Quotes</h2>
-            <p className="text-black text-sm">Get inspired with daily quotes and motivation.</p>
-          </div>
-
-          <div className="bg-gradient-to-r from-[#b89e6f] to-[#c9b180] px-12 py-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:from-[#c9b180] hover:to-[#b89e6f]">
-            <h2 className="text-xl font-bold text-black mb-1">Personalized</h2>
-            <p className="text-black text-sm">Organize habits by categories that matter to you.</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
