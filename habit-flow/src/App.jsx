@@ -1,6 +1,8 @@
+import HowItWorks from "./pages/HowItWorks";
+
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#fffcf0] flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-[#fffcf0] flex flex-col items-center justify-center px-6 py-12" style={{ scrollBehavior: "smooth" }}>
       {/* Header */}
       <h1 className="text-5xl font-bold text-[#695125] text-center mb-6">
         HabitFlow
@@ -13,9 +15,9 @@ export default function App() {
       </p>
 
       {/* Start Button */}
-      <button className="bg-[#b89e6f] text-white px-10 py-4 rounded-full text-xl font-semibold shadow-md hover:opacity-90 transition mb-16">
+      <a href="#how-it-works" className="bg-[#b89e6f] text-white px-10 py-4 rounded-full text-xl font-semibold shadow-md hover:opacity-90 transition mb-16 inline-block text-center">
         Start Building Habits
-      </button>
+      </a>
 
   {/* Features Section */}
   <div className="grid grid-cols-2 gap-8 max-w-3xl w-full justify-items-center text-center">
@@ -37,6 +39,8 @@ export default function App() {
           </div>
         ))}
       </div>
+      {/* Inline HowItWorks section so anchor works */}
+      <HowItWorks />
     </div>
   );
 }
