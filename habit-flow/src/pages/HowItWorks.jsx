@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin } from "lucide-react"; // import icons
-import womanJournal from "../assets/woman-journal.jpg"; // your image
+import { Mail, Phone, MapPin } from "lucide-react";
+import womanJournal from "../assets/woman-journal.jpg";
 
 export default function HowItWorks() {
   return (
@@ -20,51 +20,56 @@ export default function HowItWorks() {
         <div className="flex flex-row flex-nowrap gap-6 justify-center w-full max-w-6xl mb-12">
           <button className="bg-[#fffcf0] text-[#695125] h-[30vh] w-[30%] min-w-[200px] rounded-lg shadow-md hover:bg-[#efe6d8] transition flex flex-col justify-center items-center p-6">
             <span className="font-bold text-3xl mb-3 text-center">Create Your Habits</span>
-            <span className="text-xl text-center">Set up habits in categories like Health, Learning, or Mindfulness.</span>
+            <span className="text-xl text-center">
+              Set up habits in categories like Health, Learning, or Mindfulness.
+            </span>
           </button>
 
           <button className="bg-[#fffcf0] text-[#695125] h-[30vh] w-[30%] min-w-[200px] rounded-lg shadow-md hover:bg-[#efe6d8] transition flex flex-col justify-center items-center p-6">
             <span className="font-bold text-3xl mb-3 text-center">Track Daily</span>
-            <span className="text-xl text-center">Simple one-tap completion with optional notes and reflections.</span>
+            <span className="text-xl text-center">
+              Simple one-tap completion with optional notes and reflections.
+            </span>
           </button>
 
           <button className="bg-[#fffcf0] text-[#695125] h-[30vh] w-[30%] min-w-[200px] rounded-lg shadow-md hover:bg-[#efe6d8] transition flex flex-col justify-center items-center p-6">
             <span className="font-bold text-3xl mb-3 text-center">Build Momentum</span>
-            <span className="text-xl text-center">Watch your streaks grow and celebrate your progress.</span>
+            <span className="text-xl text-center">
+              Watch your streaks grow and celebrate your progress.
+            </span>
           </button>
         </div>
       </div>
 
       {/* Bottom Section */}
-      <div className="w-full bg-[#efe3b8] py-12">
-        <div className="max-w-6xl flex flex-col md:flex-row items-center justify-between gap-12 px-8">
-          
+      <div className="w-full bg-[#efe3b8] py-16">
+        <div className="max-w-6xl flex flex-row items-center justify-between gap-12 px-8">
           {/* Left Image */}
-          <div className="flex-1 flex justify-center md:justify-start">
+          <div className="flex-shrink-0">
             <img
               src={womanJournal}
               alt="HabitFlow illustration"
-              className="w-[45%] md:w-[60%] lg:w-[70%] h-auto rounded-lg shadow-lg"
+              className="w-[50%] min-w-[200px] rounded-lg shadow-lg object-cover"
             />
           </div>
 
-          {/* Contact Info */}
-          <div className="flex-1 text-center md:text-left text-[#695125] space-y-4">
-            <h2 className="text-5xl font-[Lovelace] mb-6">Get In Touch</h2>
+          {/* Right Contact Info */}
+          <div className="flex-1 text-left text-[#695125] space-y-10">
+            <h2 className="text-[3.5rem] font-[Lovelace] mb-8">Get In Touch</h2>
 
-            <div className="flex items-center justify-center md:justify-start space-x-4">
-              <Mail size={28} />
-              <p className="text-xl">support@habitflow.com</p>
+            <div className="flex items-center gap-5 text-[2rem]">
+              <Mail className="w-10 h-10" />
+              <span>support@habitflow.com</span>
             </div>
 
-            <div className="flex items-center justify-center md:justify-start space-x-4">
-              <Phone size={28} />
-              <p className="text-xl">+123 456 7890</p>
+            <div className="flex items-center gap-5 text-[2rem]">
+              <Phone className="w-10 h-10" />
+              <span>+123 456 7890</span>
             </div>
 
-            <div className="flex items-center justify-center md:justify-start space-x-4">
-              <MapPin size={28} />
-              <p className="text-xl">123 HabitFlow Street, Nairobi</p>
+            <div className="flex items-center gap-5 text-[2rem]">
+              <MapPin className="w-10 h-10" />
+              <span>123 HabitFlow Street, Nairobi</span>
             </div>
           </div>
         </div>
