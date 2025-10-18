@@ -1,6 +1,5 @@
-
 import { Link } from "react-router-dom";
-// import HabitFlowImage from "../assets/habitflow-image.png"; // Add your image later
+import WomanJournal from "../assets/woman-journal.jpg"; // Ensure this image exists
 
 export default function HowItWorks() {
   return (
@@ -35,21 +34,26 @@ export default function HowItWorks() {
         </div>
       </div>
 
-      {/* Bottom Section (full width #efe3b8) */}
-      <div className="w-full bg-[#efe3b8] py-12">
-        <div className="max-w-6xl flex flex-col md:flex-row items-center justify-between gap-12 px-8">
-          {/* Contact Info */}
-          <div className="flex-1 text-center md:text-left text-[#695125]">
+      {/* Bottom Section (Image + Contact Info) */}
+      <div className="w-full bg-[#efe3b8] py-16">
+        {/* Use flex-row always instead of switching to column */}
+        <div className="max-w-6xl mx-auto flex flex-row items-center justify-between gap-12 px-8">
+          {/* Left Side - Image */}
+          <div className="flex-1 flex justify-center">
+            <img
+              src={WomanJournal}
+              alt="Woman journaling"
+              className="w-[45%] h-auto rounded-lg shadow-lg object-cover"
+            />
+          </div>
+
+          {/* Right Side - Contact Info */}
+          <div className="flex-1 text-left text-[#695125]">
             <h2 className="text-5xl font-[Lovelace] mb-4">Get In Touch</h2>
             <p className="text-xl mb-2">Email: support@habitflow.com</p>
             <p className="text-xl mb-2">Phone: +123 456 7890</p>
             <p className="text-xl">Address: 123 HabitFlow Street, Nairobi</p>
           </div>
-
-          {/* Image placeholder */}
-          {/* <div className="flex-1 flex justify-center md:justify-end">
-            <img src={HabitFlowImage} alt="HabitFlow illustration" className="max-w-full h-auto rounded-lg shadow-lg" />
-          </div> */}
         </div>
       </div>
 
