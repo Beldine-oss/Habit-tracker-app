@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "./assets/logo.jpg"; // ✅ Make sure this exists in src/assets/
 
@@ -6,8 +6,25 @@ function Home() {
   const [showForm, setShowForm] = useState(false);
   const [showTracker, setShowTracker] = useState(false);
   const [habit, setHabit] = useState("");
-  const [habits, setHabits] = useState([]);
+  const [habits, setHabits] = useState(() => {
+    try {
+      const saved = localStorage.getItem("habits");
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error("Failed to parse saved habits:", e);
+      return [];
+    }
+  });
   const [completedHabits, setCompletedHabits] = useState([]);
+
+  // Persist habits to localStorage so they survive logout/refresh
+  useEffect(() => {
+    try {
+      localStorage.setItem("habits", JSON.stringify(habits));
+    } catch (e) {
+      console.error("Failed to save habits:", e);
+    }
+  }, [habits]);
 
   // Add new habit
   const handleAddHabit = (e) => {
