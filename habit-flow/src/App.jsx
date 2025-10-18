@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "./assets/logo.jpg"; // ✅ Make sure this exists in src/assets/
 
 function Home() {
@@ -9,8 +9,7 @@ function Home() {
   const [habits, setHabits] = useState([]);
   const [completedHabits, setCompletedHabits] = useState([]);
 
-  const navigate = useNavigate();
-
+  // Add new habit
   const handleAddHabit = (e) => {
     e.preventDefault();
     if (habit.trim()) {
@@ -20,6 +19,7 @@ function Home() {
     }
   };
 
+  // Toggle habit completion
   const toggleComplete = (habitName) => {
     setCompletedHabits((prev) =>
       prev.includes(habitName)
@@ -28,53 +28,33 @@ function Home() {
     );
   };
 
+  // Scroll to How It Works section
   const scrollToHowItWorks = () => {
     const section = document.getElementById("how-it-works");
     if (section) section.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Show tracker when Track Progress is clicked
+  const handleShowTracker = () => {
+    if (habits.length === 0) {
+      alert("Please add a habit first!");
+      return;
+    }
+    setShowTracker(true);
+  };
+
   const features = [
-    {
-      title: "Set Goals",
-      desc: "Create personalized habits across different categories.",
-      bg: "#b79b87",
-      action: null,
-    },
-    {
-      title: "Track Progress",
-      desc: "Simple one-tap logging to mark habits as complete.",
-      bg: "#b89e6f",
-      action: () => navigate("/track-progress", { state: { habits } }),
-    },
-    {
-      title: "Build Streaks",
-      desc: "Stay motivated with visual progress and streak counters.",
-      bg: "#b89e6f",
-      action: null,
-    },
-    {
-      title: "Calendar View",
-      desc: "See your progress at a glance.",
-      bg: "#efe3b8",
-      action: null,
-    },
-    {
-      title: "Daily Quotes",
-      desc: "Get inspired with daily quotes and motivation.",
-      bg: "#b79b87",
-      action: null,
-    },
-    {
-      title: "Personalized",
-      desc: "Organize habits by categories that matter to you.",
-      bg: "#b89e6f",
-      action: null,
-    },
+    { title: "Set Goals", desc: "Create personalized habits across different categories.", bg: "#b79b87", action: () => {} },
+    { title: "Track Progress", desc: "Simple one-tap logging to mark habits as complete.", bg: "#b89e6f", action: handleShowTracker },
+    { title: "Build Streaks", desc: "Stay motivated with visual progress and streak counters.", bg: "#b89e6f", action: () => {} },
+    { title: "Calendar View", desc: "See your progress at a glance.", bg: "#efe3b8", action: () => {} },
+    { title: "Daily Quotes", desc: "Get inspired with daily quotes and motivation.", bg: "#b79b87", action: () => {} },
+    { title: "Personalized", desc: "Organize habits by categories that matter to you.", bg: "#b89e6f", action: () => {} },
   ];
 
   return (
     <div className="min-h-screen bg-[#fffcf0] flex flex-col items-center justify-center px-6 py-12">
-      {/* ✅ Logo */}
+      {/* Logo */}
       <img
         src={logo}
         alt="HabitFlow Logo"
@@ -82,18 +62,18 @@ function Home() {
         style={{ width: 40, height: 40 }}
       />
 
-      {/* ✅ App Title */}
+      {/* App Title */}
       <h1 className="text-5xl font-bold text-[#695125] text-center mb-6">
         HabitFlow
       </h1>
 
-      {/* ✅ Description */}
+      {/* Description */}
       <p className="max-w-2xl text-lg text-[#695125] text-center mb-10 leading-relaxed">
         Transform your life one habit at a time. Track, build and maintain daily routines
         to help you achieve your personal development goals.
       </p>
 
-      {/* ✅ Start Building Habits Button */}
+      {/* Start Building Habits */}
       <button
         onClick={() => setShowForm(true)}
         className="bg-[#b89e6f] text-white px-10 py-4 rounded-full text-xl font-semibold shadow-md hover:opacity-90 transition mb-10"
@@ -101,15 +81,13 @@ function Home() {
         Start Building Habits
       </button>
 
-      {/* ✅ Habit Creation Form */}
+      {/* Habit Creation Form */}
       {showForm && (
         <form
           onSubmit={handleAddHabit}
           className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md text-center mb-8"
         >
-          <h2 className="text-2xl font-semibold text-[#695125] mb-4">
-            Add a New Habit
-          </h2>
+          <h2 className="text-2xl font-semibold text-[#695125] mb-4">Add a New Habit</h2>
           <input
             type="text"
             value={habit}
@@ -135,7 +113,7 @@ function Home() {
         </form>
       )}
 
-      {/* ✅ Habit Tracker */}
+      {/* Habit Tracker */}
       {showTracker && habits.length > 0 && (
         <div className="bg-[#efe6d8] p-6 rounded-xl shadow-md w-full max-w-md mb-12">
           <h3 className="text-2xl font-bold text-[#695125] mb-4 text-center">
@@ -174,7 +152,7 @@ function Home() {
         </div>
       )}
 
-      {/* ✅ Your Habits List */}
+      {/* Display Your Habits List */}
       {habits.length > 0 && !showTracker && (
         <div className="bg-[#efe6d8] p-6 rounded-xl shadow-md w-full max-w-md mb-12">
           <h3 className="text-2xl font-bold text-[#695125] mb-4 text-center">
@@ -182,10 +160,7 @@ function Home() {
           </h3>
           <ul className="space-y-2 text-[#695125]">
             {habits.map((h, i) => (
-              <li
-                key={i}
-                className="bg-white rounded-full px-4 py-2 shadow text-center"
-              >
+              <li key={i} className="bg-white rounded-full px-4 py-2 shadow text-center">
                 {h}
               </li>
             ))}
@@ -193,7 +168,7 @@ function Home() {
         </div>
       )}
 
-      {/* ✅ Feature Buttons */}
+      {/* Feature Buttons Grid */}
       <div className="grid grid-cols-2 gap-8 max-w-5xl w-full text-center justify-items-center mt-12">
         {features.map((feature, i) => (
           <button
@@ -208,7 +183,7 @@ function Home() {
         ))}
       </div>
 
-      {/* ✅ How It Works Section */}
+      {/* How It Works Section */}
       <div
         id="how-it-works"
         className="w-full bg-[#b89e6f] text-[#fffcf0] text-center py-20 mt-20 rounded-2xl"
