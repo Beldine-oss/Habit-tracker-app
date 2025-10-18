@@ -24,7 +24,8 @@ function Home() {
       <img
         src={logo}
         alt="HabitFlow Logo"
-        className="w-16 h-16 object-contain mb-4"
+        className="object-contain mb-4"
+        style={{ width: 48, height: 48 }}
       />
 
       <h1 className="text-5xl font-bold text-[#695125] text-center mb-6">HabitFlow</h1>
