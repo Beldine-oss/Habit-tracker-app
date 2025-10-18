@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import HowItWorks from "./pages/HowItWorks.jsx";
+import logo from "./assets/logo.jpg"; // ✅ Import logo image
 
 function Home() {
   const scrollToHowItWorks = () => {
@@ -20,6 +20,13 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-[#fffcf0] flex flex-col items-center justify-center px-6 py-12">
+      {/* ✅ Logo Section */}
+      <img
+        src={logo}
+        alt="HabitFlow Logo"
+        className="w-16 h-16 object-contain mb-4"
+      />
+
       <h1 className="text-5xl font-bold text-[#695125] text-center mb-6">HabitFlow</h1>
 
       <p className="max-w-2xl text-lg text-[#695125] text-center mb-10 leading-relaxed">
@@ -34,7 +41,7 @@ function Home() {
         Start Building Habits
       </button>
 
-      {/* Link to the separate How It Works route */}
+      {/* Link to How It Works Page */}
       <Link
         to="/how-it-works"
         className="inline-block bg-transparent border border-[#695125] text-[#695125] px-6 py-2 rounded-full font-medium hover:bg-[#efe6d8] transition mb-8"
@@ -42,6 +49,7 @@ function Home() {
         View full How It Works page
       </Link>
 
+      {/* Feature Buttons */}
       <div className="grid grid-cols-2 gap-8 max-w-5xl w-full text-center justify-items-center">
         {features.map((feature, i) => (
           <button
@@ -55,6 +63,7 @@ function Home() {
         ))}
       </div>
 
+      {/* How It Works Section */}
       <div
         id="how-it-works"
         className="w-full bg-[#b89e6f] text-[#fffcf0] text-center py-20 mt-20 rounded-2xl"

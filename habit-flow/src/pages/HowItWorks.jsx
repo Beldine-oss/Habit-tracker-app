@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 // import HabitFlowImage from "../assets/habitflow-image.png"; // Add your image later
 
@@ -34,20 +35,22 @@ export default function HowItWorks() {
         </div>
       </div>
 
-      {/* Bottom Section */}
-      <div className="w-full bg-[#efe3b8] max-w-6xl flex flex-col md:flex-row items-center justify-between gap-12 p-8 rounded-lg">
-        {/* Contact Info */}
-        <div className="flex-1 text-center md:text-left text-[#695125]">
-          <h2 className="text-5xl font-[Lovelace] mb-4">Get In Touch</h2>
-          <p className="text-xl mb-2">Email: support@habitflow.com</p>
-          <p className="text-xl mb-2">Phone: +123 456 7890</p>
-          <p className="text-xl">Address: 123 HabitFlow Street, Nairobi</p>
-        </div>
+      {/* Bottom Section (full width #efe3b8) */}
+      <div className="w-full bg-[#efe3b8] py-12">
+        <div className="max-w-6xl flex flex-col md:flex-row items-center justify-between gap-12 px-8">
+          {/* Contact Info */}
+          <div className="flex-1 text-center md:text-left text-[#695125]">
+            <h2 className="text-5xl font-[Lovelace] mb-4">Get In Touch</h2>
+            <p className="text-xl mb-2">Email: support@habitflow.com</p>
+            <p className="text-xl mb-2">Phone: +123 456 7890</p>
+            <p className="text-xl">Address: 123 HabitFlow Street, Nairobi</p>
+          </div>
 
-        {/* Image placeholder (add later) */}
-        {/* <div className="flex-1 flex justify-center md:justify-end">
-          <img src={HabitFlowImage} alt="HabitFlow illustration" className="max-w-full h-auto rounded-lg shadow-lg" />
-        </div> */}
+          {/* Image placeholder */}
+          {/* <div className="flex-1 flex justify-center md:justify-end">
+            <img src={HabitFlowImage} alt="HabitFlow illustration" className="max-w-full h-auto rounded-lg shadow-lg" />
+          </div> */}
+        </div>
       </div>
 
       {/* Back to Home */}
