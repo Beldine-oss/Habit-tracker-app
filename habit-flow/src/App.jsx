@@ -1,77 +1,110 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import logo from "./assets/logo.jpg"; // ✅ Make sure this exists in src/assets/
+import logo from "./assets/logo.jpg";
 
 function Home() {
   const [showForm, setShowForm] = useState(false);
   const [showTracker, setShowTracker] = useState(false);
   const [habit, setHabit] = useState("");
-  const [habits, setHabits] = useState(() => {
-    try {
-      const saved = localStorage.getItem("habits");
-      return saved ? JSON.parse(saved) : [];
-    } catch (e) {
-      console.error("Failed to parse saved habits:", e);
-      return [];
-    }
-  });
+  const [habits, setHabits] = useState([]);
   const [completedHabits, setCompletedHabits] = useState([]);
+  const [streaks, setStreaks] = useState({});
 
-  // Persist habits to localStorage so they survive logout/refresh
+  // ✅ Load saved habits and streaks from localStorage on page load
   useEffect(() => {
-    try {
-      localStorage.setItem("habits", JSON.stringify(habits));
-    } catch (e) {
-      console.error("Failed to save habits:", e);
-    }
+    const savedHabits = JSON.parse(localStorage.getItem("habits")) || [];
+    const savedStreaks = JSON.parse(localStorage.getItem("streaks")) || {};
+    const savedCompleted = JSON.parse(localStorage.getItem("completedHabits")) || [];
+
+    setHabits(savedHabits);
+    setStreaks(savedStreaks);
+    setCompletedHabits(savedCompleted);
+  }, []);
+
+  // ✅ Save habits, completed, and streaks to localStorage when they change
+  useEffect(() => {
+    localStorage.setItem("habits", JSON.stringify(habits));
   }, [habits]);
 
-  // Add new habit
+  useEffect(() => {
+    localStorage.setItem("completedHabits", JSON.stringify(completedHabits));
+  }, [completedHabits]);
+
+  useEffect(() => {
+    localStorage.setItem("streaks", JSON.stringify(streaks));
+  }, [streaks]);
+
+  // ✅ Add new habit
   const handleAddHabit = (e) => {
     e.preventDefault();
-    if (habit.trim()) {
+    if (habit.trim() && !habits.includes(habit)) {
       setHabits([...habits, habit]);
       setHabit("");
       setShowForm(false);
     }
   };
 
-  // Toggle habit completion
+  // ✅ Toggle completion & streaks
   const toggleComplete = (habitName) => {
-    setCompletedHabits((prev) =>
-      prev.includes(habitName)
-        ? prev.filter((h) => h !== habitName)
-        : [...prev, habitName]
-    );
+    setCompletedHabits((prev) => {
+      const isCompleted = prev.includes(habitName);
+      if (isCompleted) {
+        // Uncheck habit — remove from completed
+        return prev.filter((h) => h !== habitName);
+      } else {
+        // Check habit — mark complete and increase streak
+        setStreaks((prevStreaks) => ({
+          ...prevStreaks,
+          [habitName]: prevStreaks[habitName] ? prevStreaks[habitName] + 1 : 1,
+        }));
+        return [...prev, habitName];
+      }
+    });
   };
 
-  // Scroll to How It Works section
-  const scrollToHowItWorks = () => {
-    const section = document.getElementById("how-it-works");
-    if (section) section.scrollIntoView({ behavior: "smooth" });
-  };
-
-  // Show tracker when Track Progress is clicked
-  const handleShowTracker = () => {
-    if (habits.length === 0) {
-      alert("Please add a habit first!");
-      return;
-    }
-    setShowTracker(true);
-  };
-
+  // ✅ Six features as before
   const features = [
-    { title: "Set Goals", desc: "Create personalized habits across different categories.", bg: "#b79b87", action: () => {} },
-    { title: "Track Progress", desc: "Simple one-tap logging to mark habits as complete.", bg: "#b89e6f", action: handleShowTracker },
-    { title: "Build Streaks", desc: "Stay motivated with visual progress and streak counters.", bg: "#b89e6f", action: () => {} },
-    { title: "Calendar View", desc: "See your progress at a glance.", bg: "#efe3b8", action: () => {} },
-    { title: "Daily Quotes", desc: "Get inspired with daily quotes and motivation.", bg: "#b79b87", action: () => {} },
-    { title: "Personalized", desc: "Organize habits by categories that matter to you.", bg: "#b89e6f", action: () => {} },
+    {
+      title: "Set Goals",
+      desc: "Create personalized habits across different categories.",
+      bg: "#b79b87",
+      action: () => setShowForm(true),
+    },
+    {
+      title: "Track Progress",
+      desc: "Simple one-tap logging to mark habits as complete.",
+      bg: "#b89e6f",
+      action: () => setShowTracker(true),
+    },
+    {
+      title: "Build Streaks",
+      desc: "Stay motivated with visual progress and streak counters.",
+      bg: "#b89e6f",
+      action: () => setShowTracker(true),
+    },
+    {
+      title: "Calendar View",
+      desc: "See your progress at a glance.",
+      bg: "#efe3b8",
+      action: () => alert("Calendar view coming soon!"),
+    },
+    {
+      title: "Daily Quotes",
+      desc: "Get inspired with daily quotes and motivation.",
+      bg: "#b79b87",
+      action: () => alert("Motivational quotes feature coming soon!"),
+    },
+    {
+      title: "Personalized",
+      desc: "Organize habits by categories that matter to you.",
+      bg: "#b89e6f",
+      action: () => alert("Customization feature coming soon!"),
+    },
   ];
 
   return (
     <div className="min-h-screen bg-[#fffcf0] flex flex-col items-center justify-center px-6 py-12">
-      {/* Logo */}
+      {/* ✅ Logo */}
       <img
         src={logo}
         alt="HabitFlow Logo"
@@ -79,18 +112,18 @@ function Home() {
         style={{ width: 40, height: 40 }}
       />
 
-      {/* App Title */}
+      {/* ✅ App Title */}
       <h1 className="text-5xl font-bold text-[#695125] text-center mb-6">
         HabitFlow
       </h1>
 
-      {/* Description */}
+      {/* ✅ Description */}
       <p className="max-w-2xl text-lg text-[#695125] text-center mb-10 leading-relaxed">
-        Transform your life one habit at a time. Track, build and maintain daily routines
+        Transform your life one habit at a time. Track, build, and maintain daily routines
         to help you achieve your personal development goals.
       </p>
 
-      {/* Start Building Habits */}
+      {/* ✅ Start Building Habits */}
       <button
         onClick={() => setShowForm(true)}
         className="bg-[#b89e6f] text-white px-10 py-4 rounded-full text-xl font-semibold shadow-md hover:opacity-90 transition mb-10"
@@ -98,7 +131,7 @@ function Home() {
         Start Building Habits
       </button>
 
-      {/* Habit Creation Form */}
+      {/* ✅ Habit Form */}
       {showForm && (
         <form
           onSubmit={handleAddHabit}
@@ -130,7 +163,7 @@ function Home() {
         </form>
       )}
 
-      {/* Habit Tracker */}
+      {/* ✅ Habit Tracker */}
       {showTracker && habits.length > 0 && (
         <div className="bg-[#efe6d8] p-6 rounded-xl shadow-md w-full max-w-md mb-12">
           <h3 className="text-2xl font-bold text-[#695125] mb-4 text-center">
@@ -151,12 +184,17 @@ function Home() {
                 >
                   {h}
                 </span>
-                <input
-                  type="checkbox"
-                  checked={completedHabits.includes(h)}
-                  onChange={() => toggleComplete(h)}
-                  className="w-5 h-5 accent-[#b89e6f]"
-                />
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-bold text-[#b89e6f]">
+                    🔥 {streaks[h] || 0}
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={completedHabits.includes(h)}
+                    onChange={() => toggleComplete(h)}
+                    className="w-5 h-5 accent-[#b89e6f]"
+                  />
+                </div>
               </li>
             ))}
           </ul>
@@ -169,7 +207,7 @@ function Home() {
         </div>
       )}
 
-      {/* Display Your Habits List */}
+      {/* ✅ Show Habits */}
       {habits.length > 0 && !showTracker && (
         <div className="bg-[#efe6d8] p-6 rounded-xl shadow-md w-full max-w-md mb-12">
           <h3 className="text-2xl font-bold text-[#695125] mb-4 text-center">
@@ -177,15 +215,18 @@ function Home() {
           </h3>
           <ul className="space-y-2 text-[#695125]">
             {habits.map((h, i) => (
-              <li key={i} className="bg-white rounded-full px-4 py-2 shadow text-center">
-                {h}
+              <li
+                key={i}
+                className="bg-white rounded-full px-4 py-2 shadow text-center"
+              >
+                {h} <span className="text-sm text-[#b89e6f]">🔥 {streaks[h] || 0}</span>
               </li>
             ))}
           </ul>
         </div>
       )}
 
-      {/* Feature Buttons Grid */}
+      {/* ✅ Feature Buttons */}
       <div className="grid grid-cols-2 gap-8 max-w-5xl w-full text-center justify-items-center mt-12">
         {features.map((feature, i) => (
           <button
@@ -200,7 +241,7 @@ function Home() {
         ))}
       </div>
 
-      {/* How It Works Section */}
+      {/* ✅ How It Works Section */}
       <div
         id="how-it-works"
         className="w-full bg-[#b89e6f] text-[#fffcf0] text-center py-20 mt-20 rounded-2xl"
