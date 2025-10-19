@@ -1,97 +1,109 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import HowItWorks from "./pages/HowItWorks";
-import CalendarView from "./pages/CalendarView";
 import logo from "./assets/logo.jpg";
 
 export default function App() {
   const [habits, setHabits] = useState([]);
+  const [streaks, setStreaks] = useState({});
+  const [showGoals, setShowGoals] = useState(false);
+  const [goals, setGoals] = useState([]);
+  const [newGoal, setNewGoal] = useState("");
 
-  // ✅ Load from localStorage on mount
+  // ✅ Load from localStorage
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("habits")) || [];
-    setHabits(saved);
+    const savedHabits = JSON.parse(localStorage.getItem("habits")) || [];
+    const savedStreaks = JSON.parse(localStorage.getItem("streaks")) || {};
+    const savedGoals = JSON.parse(localStorage.getItem("goals")) || [];
+    setHabits(savedHabits);
+    setStreaks(savedStreaks);
+    setGoals(savedGoals);
   }, []);
 
-  // ✅ Save to localStorage whenever habits change
+  // ✅ Save to localStorage
   useEffect(() => {
     localStorage.setItem("habits", JSON.stringify(habits));
-  }, [habits]);
+    localStorage.setItem("streaks", JSON.stringify(streaks));
+    localStorage.setItem("goals", JSON.stringify(goals));
+  }, [habits, streaks, goals]);
 
-  // ✅ Check daily reset
-  useEffect(() => {
-    const today = new Date().toDateString();
-    const lastReset = localStorage.getItem("lastResetDate");
-
-    if (lastReset !== today) {
-      const updated = habits.map((h) => ({
-        ...h,
-        completedToday: false,
-        streak: h.completedToday ? h.streak : 0,
-      }));
-      setHabits(updated);
-      localStorage.setItem("lastResetDate", today);
-    }
-  }, [habits]);
-
-  // ✅ Add a new habit
+  // ✅ Add habit
   const addHabit = () => {
     const newHabit = prompt("Enter a new habit:");
     if (newHabit && newHabit.trim() !== "") {
-      const habitObj = {
-        name: newHabit.trim(),
-        streak: 0,
-        completedToday: false,
-      };
-      setHabits([...habits, habitObj]);
+      setHabits([...habits, newHabit]);
+      setStreaks({ ...streaks, [newHabit]: { count: 0, lastCompleted: null } });
     }
   };
 
-  // ✅ Toggle completion (marks done & updates streak)
-  const toggleComplete = (index) => {
-    const updated = [...habits];
-    const habit = updated[index];
-    if (!habit.completedToday) {
-      habit.completedToday = true;
-      habit.streak += 1;
+  // ✅ Toggle progress checkbox
+  const toggleProgress = (habit) => {
+    const today = new Date().toDateString();
+    const updated = { ...streaks };
+
+    if (updated[habit]?.lastCompleted === today) {
+      updated[habit].lastCompleted = null;
+      updated[habit].count = Math.max(updated[habit].count - 1, 0);
     } else {
-      habit.completedToday = false;
-      habit.streak = habit.streak > 0 ? habit.streak - 1 : 0;
+      updated[habit].lastCompleted = today;
+      updated[habit].count += 1;
     }
-    setHabits(updated);
+
+    setStreaks(updated);
   };
 
+  // ✅ Reset streaks daily if not completed
+  useEffect(() => {
+    const today = new Date().toDateString();
+    const updated = { ...streaks };
+    Object.keys(updated).forEach((habit) => {
+      if (updated[habit].lastCompleted !== today) {
+        updated[habit].count = 0;
+      }
+    });
+    setStreaks(updated);
+  }, []);
+
+  // ✅ Add goal
+  const addGoal = () => {
+    if (newGoal.trim() !== "") {
+      setGoals([...goals, newGoal]);
+      setNewGoal("");
+    }
+  };
+
+  // ✅ Feature buttons
   const features = [
     {
       title: "Set Goals",
-      desc: "Create personalized habits across different categories.",
       bg: "#b79b87",
+      description: "Define your personal growth targets.",
+      action: () => setShowGoals(true),
     },
     {
       title: "Track Progress",
-      desc: "Mark your daily habits as complete with one click.",
       bg: "#b89e6f",
+      description: "Mark habits as complete daily.",
     },
     {
       title: "Build Streaks",
-      desc: "Stay motivated by maintaining daily habit streaks.",
       bg: "#b89e6f",
+      description: "Stay consistent with daily progress.",
     },
     {
       title: "Calendar View",
-      desc: "See your progress visually on a calendar.",
       bg: "#efe3b8",
+      description: "See your progress at a glance.",
       link: "/calendar",
     },
     {
       title: "Daily Quotes",
-      desc: "Get inspired with motivational daily quotes.",
       bg: "#b79b87",
+      description: "Motivational quotes to inspire you.",
     },
     {
       title: "Personalized",
-      desc: "Organize habits by what matters to you.",
       bg: "#b89e6f",
+      description: "Customize your habits for your needs.",
     },
   ];
 
@@ -105,16 +117,14 @@ export default function App() {
         style={{ width: 40, height: 40 }}
       />
 
-      <h1 className="text-5xl font-bold text-[#695125] text-center mb-6">
-        HabitFlow
-      </h1>
+      <h1 className="text-5xl font-bold text-[#695125] text-center mb-6">HabitFlow</h1>
 
       <p className="max-w-2xl text-lg text-[#695125] text-center mb-10 leading-relaxed">
         Transform your life one habit at a time. Track, build, and maintain daily routines to help
         you achieve your personal development goals.
       </p>
 
-      {/* ✅ Add Habit Button */}
+      {/* ✅ Add Habit */}
       <button
         onClick={addHabit}
         className="bg-[#b89e6f] text-white px-10 py-4 rounded-full text-xl font-semibold shadow-md hover:opacity-90 transition mb-10"
@@ -122,36 +132,28 @@ export default function App() {
         Start Building Habits
       </button>
 
-      {/* ✅ Habit List with Streaks */}
+      {/* ✅ Habit List */}
       {habits.length > 0 && (
         <div className="bg-[#efe6d8] p-6 rounded-xl shadow-md w-full max-w-md mb-12">
-          <h3 className="text-2xl font-bold text-[#695125] mb-4 text-center">
-            Your Habits
-          </h3>
+          <h3 className="text-2xl font-bold text-[#695125] mb-4 text-center">Your Habits</h3>
           <ul className="space-y-3 text-[#695125]">
-            {habits.map((habit, i) => (
+            {habits.map((h, i) => (
               <li
                 key={i}
-                className="flex justify-between items-center bg-white rounded-full px-4 py-2 shadow"
+                className="bg-white rounded-full px-4 py-3 shadow flex justify-between items-center"
               >
-                <div className="flex flex-col">
-                  <span
-                    className={`${
-                      habit.completedToday ? "line-through text-green-600" : ""
-                    } text-lg`}
-                  >
-                    {habit.name}
-                  </span>
-                  <span className="text-sm text-[#b89e6f]">
-                    🔥 {habit.streak}-day streak
+                <span>{h}</span>
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    checked={streaks[h]?.lastCompleted === new Date().toDateString()}
+                    onChange={() => toggleProgress(h)}
+                    className="w-5 h-5 accent-[#b89e6f] cursor-pointer"
+                  />
+                  <span className="text-sm text-[#695125]">
+                    🔥 {streaks[h]?.count || 0} day streak
                   </span>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={habit.completedToday}
-                  onChange={() => toggleComplete(i)}
-                  className="w-5 h-5 accent-[#b89e6f]"
-                />
               </li>
             ))}
           </ul>
@@ -165,34 +167,68 @@ export default function App() {
             <Link
               key={i}
               to={f.link}
-              className="w-full max-w-xs h-40 p-5 rounded-full shadow-md text-black flex flex-col items-center justify-center hover:scale-105 transition duration-200"
+              className="w-full max-w-xs h-44 p-5 rounded-3xl shadow-md text-black flex flex-col items-center justify-center hover:scale-105 transition duration-200"
               style={{ backgroundColor: f.bg }}
             >
-              <h2 className="text-xl font-bold mb-1">{f.title}</h2>
-              <p className="text-sm">{f.desc}</p>
+              <h2 className="text-xl font-bold mb-2">{f.title}</h2>
+              <p className="text-sm">{f.description}</p>
             </Link>
           ) : (
             <button
               key={i}
-              className="w-full max-w-xs h-40 p-5 rounded-full shadow-md text-black flex flex-col items-center justify-center hover:scale-105 transition duration-200"
+              onClick={f.action}
+              className="w-full max-w-xs h-44 p-5 rounded-3xl shadow-md text-black flex flex-col items-center justify-center hover:scale-105 transition duration-200"
               style={{ backgroundColor: f.bg }}
             >
-              <h2 className="text-xl font-bold mb-1">{f.title}</h2>
-              <p className="text-sm">{f.desc}</p>
+              <h2 className="text-xl font-bold mb-2">{f.title}</h2>
+              <p className="text-sm">{f.description}</p>
             </button>
           )
         )}
       </div>
 
-      {/* ✅ How it works */}
+      {/* ✅ Goals Modal */}
+      {showGoals && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-xl shadow-lg w-96">
+            <h2 className="text-2xl font-bold text-[#695125] mb-4 text-center">Your Goals</h2>
+            <ul className="space-y-2 mb-4">
+              {goals.map((g, i) => (
+                <li key={i} className="bg-[#efe6d8] px-3 py-2 rounded-lg shadow-sm">
+                  {g}
+                </li>
+              ))}
+            </ul>
+            <input
+              value={newGoal}
+              onChange={(e) => setNewGoal(e.target.value)}
+              placeholder="Enter a new goal"
+              className="border border-[#b79b87] px-3 py-2 w-full rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-[#b89e6f]"
+            />
+            <div className="flex justify-between">
+              <button
+                onClick={addGoal}
+                className="bg-[#b89e6f] text-white px-4 py-2 rounded-lg hover:opacity-90"
+              >
+                Add Goal
+              </button>
+              <button
+                onClick={() => setShowGoals(false)}
+                className="text-[#695125] hover:underline"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ✅ How It Works Section */}
       <div
         id="how-it-works"
         className="w-full bg-[#b89e6f] text-[#fffcf0] text-center py-20 mt-20 rounded-2xl"
       >
-        <Link
-          to="/how-it-works"
-          className="text-5xl font-[Lovelace] hover:underline transition"
-        >
+        <Link to="/how-it-works" className="text-5xl font-[Lovelace] hover:underline transition">
           How It Works
         </Link>
       </div>
