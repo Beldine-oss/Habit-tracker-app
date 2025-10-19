@@ -42,7 +42,7 @@ export default function App() {
     }
   });
 
-  // ✅ Save all data to localStorage whenever it changes
+  //  Save all data to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("habits", JSON.stringify(habits));
     localStorage.setItem("completedHabits", JSON.stringify(completedHabits));
@@ -50,7 +50,7 @@ export default function App() {
     localStorage.setItem("lastCompletionDate", lastCompletionDate);
   }, [habits, completedHabits, streaks, lastCompletionDate]);
 
-  // ✅ Reset streaks daily if no completion
+  //  Reset streaks daily if no completion
   useEffect(() => {
     const today = new Date().toDateString();
     if (lastCompletionDate && lastCompletionDate !== today) {
@@ -66,7 +66,7 @@ export default function App() {
     }
   }, [habits]);
 
-  // ✅ Add a new habit
+  //  Add a new habit
   const addHabit = () => {
     const newHabit = prompt("Enter a new habit:");
     if (newHabit && newHabit.trim() !== "" && !habits.includes(newHabit)) {
@@ -75,7 +75,7 @@ export default function App() {
     }
   };
 
-  // ✅ Export habits as JSON file
+  //  Export habits as JSON file
   const exportData = () => {
     const data = {
       habits,
@@ -92,7 +92,7 @@ export default function App() {
     URL.revokeObjectURL(url);
   };
 
-  // ✅ Import habits from JSON file
+  //  Import habits from JSON file
   const importInputRef = React.createRef();
   const handleImport = (e) => {
     const file = e.target.files && e.target.files[0];
@@ -114,7 +114,7 @@ export default function App() {
     e.target.value = null;
   };
 
-  // ✅ Clear all stored habit data
+  //  Clear all stored habit data
   const clearData = () => {
     if (!confirm("Clear all habit data? This cannot be undone.")) return;
     setHabits([]);
@@ -128,7 +128,7 @@ export default function App() {
     alert("All habit data cleared.");
   };
 
-  // ✅ Toggle habit completion
+  //  Toggle habit completion
   const toggleComplete = (habitName) => {
     const today = new Date().toDateString();
     let updatedCompleted = [...completedHabits];
@@ -147,7 +147,7 @@ export default function App() {
     setLastCompletionDate(today);
   };
 
-  // ✅ New: Daily Quotes functionality
+  //  New: Daily Quotes functionality
   const quotes = [
     "Small daily improvements lead to stunning results.",
     "Success is the sum of small efforts repeated daily.",
@@ -163,7 +163,7 @@ export default function App() {
     alert(`💡 Daily Quote:\n\n"${random}"`);
   };
 
-  // ✅ Feature buttons
+  //  Feature buttons
   const features = [
     {
       title: "Set Goals",
@@ -192,7 +192,7 @@ export default function App() {
       title: "Daily Quotes",
       desc: "Get inspired every day with motivational quotes.",
       bg: "#b79b87",
-      action: showRandomQuote, // ✅ Added here
+      action: showRandomQuote, //  Added here
     },
     {
       title: "Personalized",
@@ -285,7 +285,7 @@ export default function App() {
         </button>
       </div>
 
-      {/* ✅ Feature Buttons Grid */}
+      {/*  Feature Buttons Grid */}
       <div className="grid grid-cols-2 gap-8 max-w-5xl w-full text-center justify-items-center mt-12">
         {features.map((f, i) =>
           f.link ? (
