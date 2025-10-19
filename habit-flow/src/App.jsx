@@ -6,71 +6,92 @@ import logo from "./assets/logo.jpg";
 
 export default function App() {
   const [habits, setHabits] = useState([]);
-  const [completedHabits, setCompletedHabits] = useState({});
-  const [showChecklist, setShowChecklist] = useState(false);
 
-  // Load habits from localStorage
+  // ✅ Load from localStorage on mount
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("habits")) || [];
     setHabits(saved);
-    const savedCompleted = JSON.parse(localStorage.getItem("completedHabits")) || {};
-    setCompletedHabits(savedCompleted);
   }, []);
 
-  // Save habits and completedHabits to localStorage
+  // ✅ Save to localStorage whenever habits change
   useEffect(() => {
     localStorage.setItem("habits", JSON.stringify(habits));
-    localStorage.setItem("completedHabits", JSON.stringify(completedHabits));
-  }, [habits, completedHabits]);
+  }, [habits]);
 
-  // Add new habit
+  // ✅ Check daily reset
+  useEffect(() => {
+    const today = new Date().toDateString();
+    const lastReset = localStorage.getItem("lastResetDate");
+
+    if (lastReset !== today) {
+      const updated = habits.map((h) => ({
+        ...h,
+        completedToday: false,
+        streak: h.completedToday ? h.streak : 0,
+      }));
+      setHabits(updated);
+      localStorage.setItem("lastResetDate", today);
+    }
+  }, [habits]);
+
+  // ✅ Add a new habit
   const addHabit = () => {
     const newHabit = prompt("Enter a new habit:");
     if (newHabit && newHabit.trim() !== "") {
-      setHabits([...habits, newHabit]);
+      const habitObj = {
+        name: newHabit.trim(),
+        streak: 0,
+        completedToday: false,
+      };
+      setHabits([...habits, habitObj]);
     }
   };
 
-  // Handle marking habit as complete
-  const toggleHabit = (habit) => {
-    setCompletedHabits((prev) => ({
-      ...prev,
-      [habit]: !prev[habit],
-    }));
+  // ✅ Toggle completion (marks done & updates streak)
+  const toggleComplete = (index) => {
+    const updated = [...habits];
+    const habit = updated[index];
+    if (!habit.completedToday) {
+      habit.completedToday = true;
+      habit.streak += 1;
+    } else {
+      habit.completedToday = false;
+      habit.streak = habit.streak > 0 ? habit.streak - 1 : 0;
+    }
+    setHabits(updated);
   };
 
   const features = [
     {
       title: "Set Goals",
+      desc: "Create personalized habits across different categories.",
       bg: "#b79b87",
-      desc: "Define clear and achievable goals to guide your daily habits.",
     },
     {
       title: "Track Progress",
+      desc: "Mark your daily habits as complete with one click.",
       bg: "#b89e6f",
-      desc: "Monitor your growth and check off habits you’ve completed.",
-      onClick: () => setShowChecklist(true),
     },
     {
       title: "Build Streaks",
+      desc: "Stay motivated by maintaining daily habit streaks.",
       bg: "#b89e6f",
-      desc: "Stay motivated by maintaining your daily habit streaks.",
     },
     {
       title: "Calendar View",
+      desc: "See your progress visually on a calendar.",
       bg: "#efe3b8",
-      desc: "View your overall progress and streaks in a calendar layout.",
       link: "/calendar",
     },
     {
       title: "Daily Quotes",
+      desc: "Get inspired with motivational daily quotes.",
       bg: "#b79b87",
-      desc: "Get inspired with motivational quotes every day.",
     },
     {
       title: "Personalized",
+      desc: "Organize habits by what matters to you.",
       bg: "#b89e6f",
-      desc: "Customize your habit tracker to match your lifestyle.",
     },
   ];
 
@@ -84,13 +105,16 @@ export default function App() {
         style={{ width: 40, height: 40 }}
       />
 
-      <h1 className="text-5xl font-bold text-[#695125] text-center mb-6">HabitFlow</h1>
+      <h1 className="text-5xl font-bold text-[#695125] text-center mb-6">
+        HabitFlow
+      </h1>
 
       <p className="max-w-2xl text-lg text-[#695125] text-center mb-10 leading-relaxed">
-        Transform your life one habit at a time. Track, build and maintain daily routines to help
+        Transform your life one habit at a time. Track, build, and maintain daily routines to help
         you achieve your personal development goals.
       </p>
 
+      {/* ✅ Add Habit Button */}
       <button
         onClick={addHabit}
         className="bg-[#b89e6f] text-white px-10 py-4 rounded-full text-xl font-semibold shadow-md hover:opacity-90 transition mb-10"
@@ -98,88 +122,77 @@ export default function App() {
         Start Building Habits
       </button>
 
-      {/* ✅ Habit list */}
+      {/* ✅ Habit List with Streaks */}
       {habits.length > 0 && (
         <div className="bg-[#efe6d8] p-6 rounded-xl shadow-md w-full max-w-md mb-12">
-          <h3 className="text-2xl font-bold text-[#695125] mb-4 text-center">Your Habits</h3>
-          <ul className="space-y-2 text-[#695125]">
-            {habits.map((h, i) => (
+          <h3 className="text-2xl font-bold text-[#695125] mb-4 text-center">
+            Your Habits
+          </h3>
+          <ul className="space-y-3 text-[#695125]">
+            {habits.map((habit, i) => (
               <li
                 key={i}
-                className="bg-white rounded-full px-4 py-2 shadow text-center"
+                className="flex justify-between items-center bg-white rounded-full px-4 py-2 shadow"
               >
-                {h}
+                <div className="flex flex-col">
+                  <span
+                    className={`${
+                      habit.completedToday ? "line-through text-green-600" : ""
+                    } text-lg`}
+                  >
+                    {habit.name}
+                  </span>
+                  <span className="text-sm text-[#b89e6f]">
+                    🔥 {habit.streak}-day streak
+                  </span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={habit.completedToday}
+                  onChange={() => toggleComplete(i)}
+                  className="w-5 h-5 accent-[#b89e6f]"
+                />
               </li>
             ))}
           </ul>
         </div>
       )}
 
-      {/* ✅ Habit Checklist (Track Progress) */}
-      {showChecklist && (
-        <div className="bg-[#efe6d8] p-6 rounded-xl shadow-md w-full max-w-md mb-12">
-          <h3 className="text-2xl font-bold text-[#695125] mb-4 text-center">
-            Track Your Progress
-          </h3>
-          {habits.length > 0 ? (
-            <ul className="space-y-3 text-[#695125]">
-              {habits.map((habit, i) => (
-                <li key={i} className="flex items-center justify-between bg-white p-3 rounded-full shadow">
-                  <span>{habit}</span>
-                  <input
-                    type="checkbox"
-                    checked={!!completedHabits[habit]}
-                    onChange={() => toggleHabit(habit)}
-                    className="w-5 h-5"
-                  />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-center text-[#695125]">No habits yet. Add one to start tracking!</p>
-          )}
-          <button
-            onClick={() => setShowChecklist(false)}
-            className="mt-6 bg-[#b89e6f] text-white px-6 py-2 rounded-full hover:opacity-90 transition"
-          >
-            Close
-          </button>
-        </div>
-      )}
-
-      {/* ✅ Feature buttons */}
+      {/* ✅ Feature Buttons */}
       <div className="grid grid-cols-2 gap-8 max-w-5xl w-full text-center justify-items-center mt-12">
         {features.map((f, i) =>
           f.link ? (
             <Link
               key={i}
               to={f.link}
-              className="w-full max-w-xs h-48 p-5 rounded-2xl shadow-md text-black flex flex-col items-center justify-center hover:scale-105 transition duration-200"
+              className="w-full max-w-xs h-40 p-5 rounded-full shadow-md text-black flex flex-col items-center justify-center hover:scale-105 transition duration-200"
               style={{ backgroundColor: f.bg }}
             >
-              <h2 className="text-xl font-bold mb-2">{f.title}</h2>
+              <h2 className="text-xl font-bold mb-1">{f.title}</h2>
               <p className="text-sm">{f.desc}</p>
             </Link>
           ) : (
             <button
               key={i}
-              onClick={f.onClick}
-              className="w-full max-w-xs h-48 p-5 rounded-2xl shadow-md text-black flex flex-col items-center justify-center hover:scale-105 transition duration-200"
+              className="w-full max-w-xs h-40 p-5 rounded-full shadow-md text-black flex flex-col items-center justify-center hover:scale-105 transition duration-200"
               style={{ backgroundColor: f.bg }}
             >
-              <h2 className="text-xl font-bold mb-2">{f.title}</h2>
+              <h2 className="text-xl font-bold mb-1">{f.title}</h2>
               <p className="text-sm">{f.desc}</p>
             </button>
           )
         )}
       </div>
 
-      {/* ✅ How It Works Section */}
+      {/* ✅ How it works */}
       <div
         id="how-it-works"
         className="w-full bg-[#b89e6f] text-[#fffcf0] text-center py-20 mt-20 rounded-2xl"
       >
-        <Link to="/how-it-works" className="text-5xl font-[Lovelace] hover:underline transition">
+        <Link
+          to="/how-it-works"
+          className="text-5xl font-[Lovelace] hover:underline transition"
+        >
           How It Works
         </Link>
       </div>
